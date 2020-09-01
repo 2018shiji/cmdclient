@@ -8,7 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.concurrent.CountDownLatch;
 
 @SpringBootTest
-class PingApplicationTests {
+class CmdClientApplicationTests {
     @Autowired
     DeviceMonitor deviceMonitor;
 

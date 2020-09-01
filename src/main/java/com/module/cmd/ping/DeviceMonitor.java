@@ -14,7 +14,9 @@ public class DeviceMonitor {
     public static final String REMOTE_ADDR_KEY = "remoteAddr";
 
     public static final List<String> MAIN_SERVER_ADDRESSES = Arrays.asList(
-            "10.28.56.10", "10.28.56.12", "10.28.56.13"
+            "10.28.56.10", "10.28.56.12", "10.28.56.13", "10.28.32.246", "10.28.32.71",
+            "10.28.32.47", "10.28.32.137", "10.28.32.163", "10.28.32.223", "10.28.32.72",
+            "10.28.32.119","10.28.32.233"
     );
 
     public static final List<String> RFID_ADDRESSES = Arrays.asList(
@@ -54,6 +56,16 @@ public class DeviceMonitor {
         SERVER_MAP.put("10.28.56.10", "图像处理服务器");
         SERVER_MAP.put("10.28.56.12", "CORS1");
         SERVER_MAP.put("10.28.56.13", "CORS2");
+        SERVER_MAP.put("10.28.32.246", "Tomcat服务器");
+        SERVER_MAP.put("10.28.32.71", "RFID数据处理服务器");
+        SERVER_MAP.put("10.28.32.47", "车载终端管理服务器");
+        SERVER_MAP.put("10.28.32.137", "Cors站管理服务器");
+        SERVER_MAP.put("10.28.32.163", "图层管理服务器");
+        SERVER_MAP.put("10.28.32.223", "应用备份服务器");
+        SERVER_MAP.put("10.28.32.72", "数据库服务器-72");
+        SERVER_MAP.put("10.28.32.119", "数据库服务器-119");
+        SERVER_MAP.put("10.28.32.233", "数据库服务器-233");
+
         for (int i = 1; i <= RFID_ADDRESSES.size(); i++) {
             RFID_MAP.put( RFID_ADDRESSES.get(i-1),"T" + i);
         }
@@ -65,7 +77,7 @@ public class DeviceMonitor {
         }
     }
 
-    public static void organizePingTasks(List<String> remoteAddr){
+    public void organizePingTasks(List<String> remoteAddr){
         try{
             SchedulerFactory schedulerFactory = new StdSchedulerFactory();
             Scheduler scheduler = schedulerFactory.getScheduler();
@@ -87,31 +99,31 @@ public class DeviceMonitor {
         } catch (Exception e){e.printStackTrace();}
     }
 
-    public static JobDetail withPingJobDetail(String remoteAddr){
+    public JobDetail withPingJobDetail(String remoteAddr){
         JobDetail jobDetail = JobBuilder.newJob(PingTask.class)
                 .usingJobData(REMOTE_ADDR_KEY, remoteAddr)
                 .build();
         return jobDetail;
     }
 
-    public static Trigger withTriggerPerSeconds(int cap, int seconds){
+    public Trigger withTriggerPerSeconds(int cap, int seconds){
         Trigger trigger = TriggerBuilder.newTrigger()
                 .withSchedule(CronScheduleBuilder.cronSchedule(cap + "/" + seconds + " * * * * ? 2020"))
                 .build();
         return trigger;
     }
 
-    private static void monitorServer(Scheduler scheduler, List<String> addresses) throws SchedulerException {
+    private void monitorServer(Scheduler scheduler, List<String> addresses) throws SchedulerException {
         List<String> addressList = new ArrayList<>();
         addressList.addAll(MAIN_SERVER_ADDRESSES);
 
         for(int i = 0; i < addressList.size(); i++){
             scheduler.scheduleJob(withPingJobDetail(addressList.get(i)),
-                    withTriggerPerSeconds(5, 30));
+                    withTriggerPerSeconds(0, 30));
         }
     }
 
-    private static void monitorRFID(Scheduler scheduler, List<String> addresses) throws SchedulerException {
+    private void monitorRFID(Scheduler scheduler, List<String> addresses) throws SchedulerException {
         List<String> addressList = new ArrayList<>();
         addressList.addAll(RFID_ADDRESSES);
 
@@ -122,7 +134,7 @@ public class DeviceMonitor {
 
     }
 
-    private static void monitorCamera(Scheduler scheduler, List<String> addresses) throws SchedulerException {
+    private void monitorCamera(Scheduler scheduler, List<String> addresses) throws SchedulerException {
         List<String> addressList = new ArrayList<>();
         addressList.addAll(CAMERA_ADDRESSES);
 
@@ -133,7 +145,7 @@ public class DeviceMonitor {
 
     }
 
-    private static void monitorFieldBridge(Scheduler scheduler, List<String> addresses) throws SchedulerException {
+    private void monitorFieldBridge(Scheduler scheduler, List<String> addresses) throws SchedulerException {
         List<String> addressList = new ArrayList<>();
         addressList.addAll(FIELD_BRIDGE_ADDRESSES);
 
