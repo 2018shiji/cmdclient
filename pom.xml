@@ -9,9 +9,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.module.cmd</groupId>
-    <artifactId>ping</artifactId>
+    <artifactId>cmdclient</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>ping</name>
+    <name>cmdclient</name>
     <description>cmd module</description>
 
     <properties>
