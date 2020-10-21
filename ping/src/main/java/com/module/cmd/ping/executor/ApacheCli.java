@@ -1,4 +1,4 @@
-package com.module.cmd.ping;
+package com.module.cmd.ping.executor;
 
 import com.module.cmd.ping.response.PingResponse;
 import org.apache.commons.exec.CommandLine;

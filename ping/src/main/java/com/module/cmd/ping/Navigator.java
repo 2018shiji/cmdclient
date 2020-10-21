@@ -1,8 +1,8 @@
-package com.module.cmd;
+package com.module.cmd.ping;
 
 import com.alibaba.fastjson.JSON;
-import com.module.cmd.ping.ApacheCli;
-import com.module.cmd.ping.DeviceMonitor;
+import com.module.cmd.ping.executor.ApacheCli;
+import com.module.cmd.ping.executor.DeviceMonitor;
 import com.module.cmd.ping.response.FieldBridgeResp;
 import com.module.cmd.ping.response.MainServerResp;
 import com.module.cmd.ping.response.PingResponse;
@@ -21,7 +21,8 @@ import java.util.Map;
 @Controller
 public class Navigator {
 
-    @Autowired DeviceMonitor deviceMonitor;
+    @Autowired
+    DeviceMonitor deviceMonitor;
 
     @PostConstruct
     public void beginPing(){ deviceMonitor.organizePingTasks(null); }
