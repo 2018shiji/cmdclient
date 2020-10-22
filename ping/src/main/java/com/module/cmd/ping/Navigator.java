@@ -7,6 +7,8 @@ import com.module.cmd.ping.response.FieldBridgeResp;
 import com.module.cmd.ping.response.MainServerResp;
 import com.module.cmd.ping.response.PingResponse;
 import com.module.cmd.ping.response.RFIDCameraResp;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +22,7 @@ import java.util.Map;
 
 @Controller
 public class Navigator {
+    Logger logger = LoggerFactory.getLogger(Navigator.class);
 
     @Autowired
     DeviceMonitor deviceMonitor;
@@ -30,15 +33,17 @@ public class Navigator {
     @ResponseBody
     @RequestMapping("getIpsStatusResp")
     public String getIpResponse(){
+        logger.info("--------------->dispatch getIpsStatusResp method");
         List<PingResponse> responses = new ArrayList<>();
         Map<String, PingResponse> pingResponses = ApacheCli.getPingResponses();
         for(Map.Entry<String, PingResponse> item : pingResponses.entrySet()){
             if(item.getKey().equals("standardTimeStamp"))continue;
             responses.add(item.getValue());
         }
-
-        System.out.println("GGGGGGGGGGGGGGGGGGGGGG" + JSON.toJSONString(responses));
-        return JSON.toJSONString(responses);
+        String result = JSON.toJSONString(responses);
+        System.out.println("GGGGGGGGGGGGGGGGGGGGGG" + result);
+        logger.info("GGGGGGGGGGGGGGGGGGGGGG" + result);
+        return result;
     }
 
     @ResponseBody
