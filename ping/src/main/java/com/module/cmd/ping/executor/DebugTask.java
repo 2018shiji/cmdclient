@@ -23,7 +23,7 @@ public class DebugTask implements Job, ApplicationContextAware {
     @Override
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
         System.out.println("i am here ****************************");
-        Map<String, PingResponse> pingResponses = ApacheCli.getPingResponses();
+        Map<String, PingResponse> pingResponses = PingCommand.getPingResponses();
         for(Map.Entry item : pingResponses.entrySet()){
             System.out.println(item.getKey() + item.getValue().toString());
         }

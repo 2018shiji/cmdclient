@@ -1,7 +1,7 @@
 package com.module.cmd.ping;
 
 import com.alibaba.fastjson.JSON;
-import com.module.cmd.ping.executor.ApacheCli;
+import com.module.cmd.ping.executor.PingCommand;
 import com.module.cmd.ping.executor.DeviceMonitor;
 import com.module.cmd.ping.response.FieldBridgeResp;
 import com.module.cmd.ping.response.MainServerResp;
@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -35,7 +34,7 @@ public class Navigator {
     public String getIpResponse(){
         logger.info("--------------->dispatch getIpsStatusResp method");
         List<PingResponse> responses = new ArrayList<>();
-        Map<String, PingResponse> pingResponses = ApacheCli.getPingResponses();
+        Map<String, PingResponse> pingResponses = PingCommand.getPingResponses();
         for(Map.Entry<String, PingResponse> item : pingResponses.entrySet()){
             if(item.getKey().equals("standardTimeStamp"))continue;
             responses.add(item.getValue());
@@ -50,7 +49,7 @@ public class Navigator {
     @RequestMapping("getMainServerResp")
     public String getServerResp(){
         List<MainServerResp> serverRespList = new ArrayList<>();
-        Map<String, PingResponse> pingResponse = ApacheCli.getPingResponses();
+        Map<String, PingResponse> pingResponse = PingCommand.getPingResponses();
 
         for(Map.Entry<String, PingResponse> item : pingResponse.entrySet()){
             fulfillMainServerList(item, serverRespList);
@@ -64,7 +63,7 @@ public class Navigator {
     @RequestMapping("getRFIDAndCamera")
     public String getRFIDCameraResp(){
         List<RFIDCameraResp> rfidCameraRespList = new ArrayList<>();
-        Map<String, PingResponse> pingResponse = ApacheCli.getPingResponses();
+        Map<String, PingResponse> pingResponse = PingCommand.getPingResponses();
 
         for(Map.Entry<String, PingResponse> item : pingResponse.entrySet()){
             fulfillRFIDCameraList(item, rfidCameraRespList);
@@ -78,7 +77,7 @@ public class Navigator {
     @RequestMapping("getFieldBridge")
     public String getFieldBridgeResp(){
         List<FieldBridgeResp> fieldBridgeResps = new ArrayList<>();
-        Map<String, PingResponse> pingResponse = ApacheCli.getPingResponses();
+        Map<String, PingResponse> pingResponse = PingCommand.getPingResponses();
 
         for(Map.Entry<String, PingResponse> item : pingResponse.entrySet()){
             fulfillBridgeList(item, fieldBridgeResps);

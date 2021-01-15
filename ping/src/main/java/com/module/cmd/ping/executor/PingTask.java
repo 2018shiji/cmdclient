@@ -20,6 +20,6 @@ public class PingTask implements Job, ApplicationContextAware {
 
     @Override
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
-        ApacheCli.doPingLogic((String)jobExecutionContext.getJobDetail().getJobDataMap().get(REMOTE_ADDR_KEY));
+        PingCommand.doPingCommand((String)jobExecutionContext.getJobDetail().getJobDataMap().get(REMOTE_ADDR_KEY));
     }
 }

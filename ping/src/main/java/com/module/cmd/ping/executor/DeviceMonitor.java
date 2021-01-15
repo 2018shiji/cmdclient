@@ -90,7 +90,7 @@ public class DeviceMonitor {
             Scheduler scheduler = schedulerFactory.getScheduler();
             scheduler.start();
 
-            Map<String, PingResponse> pingResponses = ApacheCli.getPingResponses();
+            Map<String, PingResponse> pingResponses = PingCommand.getPingResponses();
             String timeStamp = new SimpleDateFormat("HH:mm:ss:SSS").format(System.currentTimeMillis());
             pingResponses.put("standardTimeStamp",
                     new PingResponse("standardTimeStamp", false, "", timeStamp));
