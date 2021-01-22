@@ -1,6 +1,6 @@
 package com.module.cmd.ping.logconfig;
 
-import com.cmdclient.core.log.MdcServletFilter;
+import com.module.cmd.core.log.MdcServletFilter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;

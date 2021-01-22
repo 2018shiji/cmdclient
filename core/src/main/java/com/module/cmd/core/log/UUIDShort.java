@@ -1,4 +1,4 @@
-package com.cmdclient.core.log;
+package com.module.cmd.core.log;
 
 import java.util.Base64;
 import java.util.UUID;

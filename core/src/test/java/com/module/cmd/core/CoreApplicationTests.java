@@ -1,4 +1,4 @@
-package com.cmdclient.core;
+package com.module.cmd.core;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

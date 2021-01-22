@@ -1,9 +1,8 @@
 package com.module.cmd.ping.executor;
 
-import com.cmdclient.core.recode.ICmdRecordParser;
-import com.cmdclient.core.recode.ICmdRecordPojo;
+import com.module.cmd.core.recode.ICmdRecordParser;
+import com.module.cmd.core.recode.ICmdRecordPojo;
 import com.module.cmd.ping.response.PingResponse;
-import lombok.Getter;
 
 import java.io.BufferedReader;
 import java.io.PrintStream;

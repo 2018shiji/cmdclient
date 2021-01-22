@@ -1,6 +1,6 @@
 package com.module.screencmd.pojo;
 
-import com.cmdclient.core.recode.ICmdRecordPojo;
+import com.module.cmd.core.recode.ICmdRecordPojo;
 import com.module.screencmd.pojo.app_enum.AppBootstrapOption;
 import com.module.screencmd.pojo.app_enum.AppCategory;
 import com.module.screencmd.pojo.app_enum.AppOnOffArg;

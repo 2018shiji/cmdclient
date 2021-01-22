@@ -31,7 +31,7 @@
         </dependency>
 
         <dependency>
-            <groupId>com.cmdclient</groupId>
+            <groupId>com.module.cmd</groupId>
             <artifactId>core</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>

@@ -1,6 +1,6 @@
 package com.module.screencmd.pojo;
 
-import com.cmdclient.core.recode.ICmdRecordPojo;
+import com.module.cmd.core.recode.ICmdRecordPojo;
 import lombok.Data;
 import lombok.ToString;
 

@@ -1,14 +1,12 @@
 package com.module.screencmd.parser;
 
-import com.cmdclient.core.recode.ICmdRecordParser;
-import com.cmdclient.core.recode.ICmdRecordPojo;
-import com.module.screencmd.BeanUtil;
+import com.module.cmd.core.recode.ICmdRecordParser;
+import com.module.cmd.core.recode.ICmdRecordPojo;
 import com.module.screencmd.parser.app_parser.AppRecordParseCategory;
 import com.module.screencmd.parser.app_parser.AppRecordParseOnOffArg;
 import com.module.screencmd.parser.app_parser.AppRecordParseOption;
 import com.module.screencmd.pojo.AppCmdRecordPojo;
 import com.module.screencmd.websocket.WebSocketServer;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;

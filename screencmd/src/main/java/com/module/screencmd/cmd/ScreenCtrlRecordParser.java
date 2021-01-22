@@ -1,7 +1,7 @@
 package com.module.screencmd.cmd;
 
-import com.cmdclient.core.recode.ICmdRecordParser;
-import com.cmdclient.core.recode.ICmdRecordPojo;
+import com.module.cmd.core.recode.ICmdRecordParser;
+import com.module.cmd.core.recode.ICmdRecordPojo;
 import com.module.screencmd.BeanUtil;
 import com.module.screencmd.parser.CtrlRecordParseChain;
 import org.springframework.stereotype.Component;

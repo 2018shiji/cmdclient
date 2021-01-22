@@ -1,19 +1,13 @@
 package com.module.cmd.ping.executor;
 
-import com.cmdclient.core.recode.ICmdRecordParser;
-import com.cmdclient.core.recode.RealTimePumpStreamHandler;
+import com.module.cmd.core.recode.ICmdRecordParser;
+import com.module.cmd.core.recode.RealTimePumpStreamHandler;
 import com.module.cmd.ping.response.PingResponse;
 import org.apache.commons.exec.CommandLine;
-import org.apache.commons.exec.DefaultExecuteResultHandler;
 import org.apache.commons.exec.DefaultExecutor;
-import org.apache.commons.exec.PumpStreamHandler;
-import org.apache.commons.exec.util.DebugUtils;
 import org.springframework.stereotype.Component;
 
-import java.io.*;
-import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.concurrent.CountDownLatch;
 
 @Component
 public class PingCommand {

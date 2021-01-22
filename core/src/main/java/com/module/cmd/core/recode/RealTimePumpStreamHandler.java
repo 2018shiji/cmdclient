@@ -1,4 +1,4 @@
-package com.cmdclient.core.recode;
+package com.module.cmd.core.recode;
 
 import org.apache.commons.exec.PumpStreamHandler;
 

@@ -1,15 +1,13 @@
 package com.module.screencmd.cmd;
 
-import com.cmdclient.core.recode.ICmdRecordParser;
-import com.cmdclient.core.recode.ICmdRecordPojo;
+import com.module.cmd.core.recode.ICmdRecordParser;
+import com.module.cmd.core.recode.ICmdRecordPojo;
 import com.module.screencmd.BeanUtil;
 import com.module.screencmd.parser.AppRecordParseChain;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
 import java.io.BufferedReader;
 import java.io.PrintStream;
-import java.util.ArrayList;
 import java.util.List;
 
 @Component

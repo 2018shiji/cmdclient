@@ -1,4 +1,4 @@
-package com.cmdclient.core.log;
+package com.module.cmd.core.log;
 
 import ch.qos.logback.classic.helpers.MDCInsertingServletFilter;
 import org.slf4j.MDC;

@@ -1,10 +1,6 @@
-package com.cmdclient.core.recode;
+package com.module.cmd.core.recode;
 
-import lombok.Getter;
-import lombok.Setter;
 import org.apache.commons.exec.util.DebugUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
 import java.io.PrintStream;

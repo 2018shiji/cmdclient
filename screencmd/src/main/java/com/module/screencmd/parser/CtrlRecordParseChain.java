@@ -1,8 +1,7 @@
 package com.module.screencmd.parser;
 
-import com.cmdclient.core.recode.ICmdRecordParser;
-import com.cmdclient.core.recode.ICmdRecordPojo;
-import com.google.common.base.Charsets;
+import com.module.cmd.core.recode.ICmdRecordParser;
+import com.module.cmd.core.recode.ICmdRecordPojo;
 import com.google.common.io.Files;
 import com.google.common.io.LineProcessor;
 import com.module.screencmd.pojo.CtrlCmdRecordPojo;
@@ -12,8 +11,8 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.IOException;
 import java.io.PrintStream;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,7 +33,7 @@ public class CtrlRecordParseChain implements ICmdRecordParser {
          * 从固定路径读取输出日志作为返回数据
          */
         if (bufReader.readLine() == null) {
-            Files.asCharSource(new File("D:\\log\\serviceErr2.log"), Charsets.UTF_8).readLines(
+            Files.asCharSource(new File("D:\\Log\\ScreenServiceCtrl\\screenCtrl.log"), Charset.forName("GBK")).readLines(
                     new LineProcessor<String>() {
                         @Override
                         public boolean processLine(String line) {

@@ -20,6 +20,7 @@
         <module>core</module>
         <module>ping</module>
         <module>iperf</module>
+        <module>screencmd</module>
     </modules>
 
     <properties>
@@ -60,6 +61,9 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <classifier>exec</classifier>
+                </configuration>
             </plugin>
         </plugins>
     </build>

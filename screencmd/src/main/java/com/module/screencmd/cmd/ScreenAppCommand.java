@@ -1,12 +1,11 @@
 package com.module.screencmd.cmd;
 
-import com.cmdclient.core.recode.ICmdRecordParser;
-import com.cmdclient.core.recode.RealTimePumpStreamHandler;
+import com.module.cmd.core.recode.ICmdRecordParser;
+import com.module.cmd.core.recode.RealTimePumpStreamHandler;
 import com.module.screencmd.BeanUtil;
 import com.module.screencmd.pojo.AppCmdRecordPojo;
 import org.apache.commons.exec.CommandLine;
 import org.apache.commons.exec.DefaultExecutor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -18,7 +17,9 @@ public class ScreenAppCommand {
 
     public void doScreenAppCommand(String execPath){
         try{
-            String line = "cmd.exe /c cd C:\\Users\\lizhuangjie.chnet\\Desktop\\ScreenServiceHost && application.bat";
+//            String line = "cmd.exe /c cd C:\\Users\\lizhuangjie.chnet\\Desktop\\ScreenServiceHost && application.bat";
+            String line = "cmd.exe /c C:\\Users\\admin\\Desktop\\test.lnk && ping 127.0.0.1 -t";
+//            String line = "cmd.exe /c cd C:\\Users\\admin\\Desktop\\ScreenServiceHost && StartScene.cmd";
             CommandLine cmdLine = CommandLine.parse(line);
             DefaultExecutor executor = new DefaultExecutor();
             executor.setExitValues(null);

@@ -1,7 +1,7 @@
 package com.module.screencmd.cmd;
 
-import com.cmdclient.core.recode.ICmdRecordParser;
-import com.cmdclient.core.recode.RealTimePumpStreamHandler;
+import com.module.cmd.core.recode.ICmdRecordParser;
+import com.module.cmd.core.recode.RealTimePumpStreamHandler;
 import com.module.screencmd.BeanUtil;
 import org.apache.commons.exec.CommandLine;
 import org.apache.commons.exec.DefaultExecutor;
@@ -18,8 +18,8 @@ public class ScreenCtrlCommand {
 
     public void doScreenControlCmd(String path){
         try{
-
-            String line = "E:\\software\\nircmd-x64\\nircmd.exe elevate E:\\software\\nssm-2.24-101-g897c7ad\\win64\\nssm.exe start ScreenService";
+            String line = "E:\\software\\nircmd-x64\\nircmd.exe elevate E:\\software\\nssm-2.24-101-g897c7ad\\win64\\nssm.exe restart ScreenService";
+//            String line = "C:\\Users\\admin\\Desktop\\ScreenServiceHost\\nircmd\\nircmd.exe elevate C:\\Users\\admin\\Desktop\\ScreenServiceHost\\nssm-2.24-101-g897c7ad\\win64\\nssm.exe restart ScreenServiceCtrl";
             CommandLine cmdLine = CommandLine.parse(line);
             DefaultExecutor executor = new DefaultExecutor();
             executor.setExitValues(null);
