@@ -3,9 +3,12 @@ package com.module.screencmd.cmd;
 import com.module.cmd.core.recode.ICmdRecordParser;
 import com.module.cmd.core.recode.RealTimePumpStreamHandler;
 import com.module.screencmd.BeanUtil;
+import com.module.screencmd.cmd.app.VideoAppCmd;
+import com.module.screencmd.cmd.app.WebAppCmd;
 import com.module.screencmd.pojo.AppCmdRecordPojo;
 import org.apache.commons.exec.CommandLine;
 import org.apache.commons.exec.DefaultExecutor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -13,13 +16,19 @@ import java.util.concurrent.CountDownLatch;
 
 @Component
 public class ScreenAppCommand {
+    @Autowired
+    private VideoAppCmd videoAppCmd;
+    @Autowired
+    private WebAppCmd webAppCmd;
+
     private ICmdRecordParser cmdRecordParser = BeanUtil.getBean(ScreenAppRecordParser.class);
 
-    public void doScreenAppCommand(String execPath){
+    public void doScreenAppCmdByBat(String execPath){
         try{
-//            String line = "cmd.exe /c cd C:\\Users\\lizhuangjie.chnet\\Desktop\\ScreenServiceHost && application.bat";
-            String line = "cmd.exe /c C:\\Users\\admin\\Desktop\\test.lnk && ping 127.0.0.1 -t";
-//            String line = "cmd.exe /c cd C:\\Users\\admin\\Desktop\\ScreenServiceHost && StartScene.cmd";
+//            String line = "cmd.exe /c cd C:\\Users\\lizhuangjie.chnet\\Desktop\\ScreenServiceHost && ScreenServiceHost.exe";
+//            String line = "cmd.exe /c start C:\\Users\\Administrator\\Desktop\\ScreenServiceHost\\ScreenServiceHost.exe";
+            String line = "cmd.exe /c cd C:\\Users\\admin\\Desktop\\ScreenServiceHost && StartScene.cmd";
+//            String line = "cmd.exe /k tasklist | findstr java";
             CommandLine cmdLine = CommandLine.parse(line);
             DefaultExecutor executor = new DefaultExecutor();
             executor.setExitValues(null);
@@ -27,6 +36,22 @@ public class ScreenAppCommand {
             executor.execute(cmdLine);
 
         } catch (Exception e){e.printStackTrace();}
+    }
+
+    public void startUpWebApp(){
+        webAppCmd.startWebApp();
+    }
+
+    public void startUpVideoApp(){
+        videoAppCmd.startVideoApp();
+    }
+
+    public void killAllWebApp(){
+        webAppCmd.taskKillAllChrome();
+    }
+
+    public void killAllVideoApp(){
+        videoAppCmd.taskKillAllVlc();
     }
 
     public void doScreenAppVolume(){
@@ -53,7 +78,7 @@ public class ScreenAppCommand {
     }
 
     public static void main(String[] args){
-        new ScreenAppCommand().doScreenAppCommand(null);
+        new ScreenAppCommand().doScreenAppCmdByBat(null);
         CountDownLatch countDownLatch = new CountDownLatch(1);
         try{
             countDownLatch.await();
