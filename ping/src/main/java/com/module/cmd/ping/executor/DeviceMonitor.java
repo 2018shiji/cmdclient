@@ -152,6 +152,7 @@ public class DeviceMonitor {
 
     }
 
+
     private void monitorFieldBridge(Scheduler scheduler, List<String> addresses) throws SchedulerException {
         List<String> addressList = new ArrayList<>();
         addressList.addAll(FIELD_BRIDGE_ADDRESSES);
