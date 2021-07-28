@@ -28,7 +28,6 @@ public class Navigator {
     public String startUpAppScript(){
         System.out.println("开始运行应用程序启动脚本");
         BeanUtil.getBean(ScreenAppCommand.class).doScreenAppCmdByBat(null);
-        getStructuredCmd();
         return "OK";
     }
 
@@ -38,19 +37,6 @@ public class Navigator {
         System.out.println("开始运行屏控程序启动脚本");
         BeanUtil.getBean(ScreenCtrlCommand.class).doScreenControlCmd(null);
         return true;
-    }
-
-    @ResponseBody
-    @RequestMapping("getAppCommandResult")
-    public List<AppCmdRecordPojo> getAppCommandResult(){
-        return BeanUtil.getBean(ScreenAppCommand.class).getAppCmdRecordPojoList();
-    }
-
-    public List<AppCmdRecordPojo> getStructuredCmd(){
-
-        BeanUtil.getBean(ScreenAppCommand.class).doScreenAppCmdByBat(null);
-        List<AppCmdRecordPojo> appCmdRecordPojoList = BeanUtil.getBean(ScreenAppCommand.class).getAppCmdRecordPojoList();
-        return appCmdRecordPojoList;
     }
 
     @ResponseBody

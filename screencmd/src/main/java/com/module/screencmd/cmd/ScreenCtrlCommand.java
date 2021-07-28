@@ -1,7 +1,7 @@
 package com.module.screencmd.cmd;
 
-import com.module.cmd.core.recode.ICmdRecordParser;
-import com.module.cmd.core.recode.RealTimePumpStreamHandler;
+import com.module.cmd.core.cmdpumper.ICmdPumpStreamHandler;
+import com.module.cmd.core.cmdpumper.RealTimePumpStreamHandler;
 import com.module.screencmd.BeanUtil;
 import org.apache.commons.exec.CommandLine;
 import org.apache.commons.exec.DefaultExecutor;
@@ -14,7 +14,7 @@ import java.util.concurrent.CountDownLatch;
  */
 @Component
 public class ScreenCtrlCommand {
-    private ICmdRecordParser ctrlRecordParser = BeanUtil.getBean(ScreenCtrlRecordParser.class);
+    private ICmdPumpStreamHandler ctrlRecordParser = BeanUtil.getBean(ScreenCtrlRecordParser.class);
 
     public void doScreenControlCmd(String path){
         try{

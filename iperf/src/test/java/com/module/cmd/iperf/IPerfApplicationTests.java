@@ -10,6 +10,7 @@ class IPerfApplicationTests {
 
     @Test
     void contextLoads() {
+        System.out.println("bootstrap successful");
     }
 
     @Test

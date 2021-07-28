@@ -1,9 +1,6 @@
 package com.module.screencmd.cmd;
 
-import com.module.cmd.core.recode.ICmdRecordParser;
-import com.module.cmd.core.recode.ICmdRecordPojo;
-import com.module.screencmd.BeanUtil;
-import com.module.screencmd.parser.CtrlRecordParseChain;
+import com.module.cmd.core.cmdpumper.ICmdPumpStreamHandler;
 import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
@@ -11,8 +8,7 @@ import java.io.PrintStream;
 import java.util.List;
 
 @Component
-public class ScreenCtrlRecordParser implements ICmdRecordParser {
-    private CtrlRecordParseChain ctrlRecordChain = BeanUtil.getBean(CtrlRecordParseChain.class);
+public class ScreenCtrlRecordParser implements ICmdPumpStreamHandler {
 
     @Override
     public void parseCmdRecord(BufferedReader bufReader, PrintStream printStream) throws Exception {

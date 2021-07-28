@@ -1,4 +1,4 @@
-package com.module.cmd.core.recode;
+package com.module.cmd.core.cmdpumper;
 
 import org.apache.commons.exec.util.DebugUtils;
 
@@ -13,18 +13,14 @@ public class RealTimeReaderPumper implements Runnable {
     private final PrintStream os;
     private boolean finished;
     private final boolean closeWhenExhausted;
-    private final ICmdRecordParser cmdRecordParser;
+    private final ICmdPumpStreamHandler cmdRecordParser;
 
     public RealTimeReaderPumper(final BufferedReader is, final PrintStream os,
-                        final boolean closeWhenExhausted, final ICmdRecordParser cmdRecordParser) {
+                        final boolean closeWhenExhausted, final ICmdPumpStreamHandler cmdRecordParser) {
         this.is = is;
         this.os = os;
         this.closeWhenExhausted = closeWhenExhausted;
         this.cmdRecordParser = cmdRecordParser;
-    }
-
-    public RealTimeReaderPumper(final BufferedReader is, final PrintStream os, final ICmdRecordParser cmdRecordParser) {
-        this(is, os, false, cmdRecordParser);
     }
 
     public void run() {
@@ -46,6 +42,7 @@ public class RealTimeReaderPumper implements Runnable {
                     DebugUtils.handleException(msg ,e);
                 }
             }
+
             synchronized (this) {
                 finished = true;
                 notifyAll();

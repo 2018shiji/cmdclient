@@ -1,7 +1,6 @@
 package com.module.screencmd.parser;
 
-import com.module.cmd.core.recode.ICmdRecordParser;
-import com.module.cmd.core.recode.ICmdRecordPojo;
+import com.module.cmd.core.cmdpumper.ICmdPumpStreamHandler;
 import com.google.common.io.Files;
 import com.google.common.io.LineProcessor;
 import com.module.screencmd.pojo.CtrlCmdRecordPojo;
@@ -17,8 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class CtrlRecordParseChain implements ICmdRecordParser {
-    public List<ICmdRecordParser> ctrlRecordParserChain;
+public class CtrlRecordParseChain implements ICmdPumpStreamHandler {
+    public List<ICmdPumpStreamHandler> ctrlRecordParserChain;
     public List<CtrlCmdRecordPojo> ctrlCmdRecordPojoList;
 
     @PostConstruct

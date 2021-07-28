@@ -1,6 +1,5 @@
 package com.module.screencmd.pojo;
 
-import com.module.cmd.core.recode.ICmdRecordPojo;
 import com.module.screencmd.pojo.app_enum.AppBootstrapOption;
 import com.module.screencmd.pojo.app_enum.AppCategory;
 import com.module.screencmd.pojo.app_enum.AppOnOffArg;
@@ -13,7 +12,7 @@ import java.util.List;
 @Data
 @ToString
 @Component
-public class AppCmdRecordPojo implements ICmdRecordPojo {
+public class AppCmdRecordPojo {
     private AppOnOffArg appOnOffArg;
     private AppCategory appCategory;
     private List<AppBootstrapOption> appOptions;

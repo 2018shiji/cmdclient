@@ -1,7 +1,6 @@
 package com.module.screencmd.cmd;
 
-import com.module.cmd.core.recode.ICmdRecordParser;
-import com.module.cmd.core.recode.ICmdRecordPojo;
+import com.module.cmd.core.cmdpumper.ICmdPumpStreamHandler;
 import com.module.screencmd.BeanUtil;
 import com.module.screencmd.parser.AppRecordParseChain;
 import org.springframework.stereotype.Component;
@@ -11,7 +10,7 @@ import java.io.PrintStream;
 import java.util.List;
 
 @Component
-public class ScreenAppRecordParser implements ICmdRecordParser {
+public class ScreenAppRecordParser implements ICmdPumpStreamHandler {
     private AppRecordParseChain appRecordChain = BeanUtil.getBean(AppRecordParseChain.class);
 
     @Override

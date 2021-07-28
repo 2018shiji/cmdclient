@@ -1,13 +1,13 @@
-package com.module.cmd.core.recode;
+package com.module.cmd.core.cmdpumper;
 
 import org.apache.commons.exec.PumpStreamHandler;
 
 import java.io.*;
 
 public class RealTimePumpStreamHandler extends PumpStreamHandler {
-    private ICmdRecordParser cmdRecordParser;
+    private ICmdPumpStreamHandler cmdRecordParser;
 
-    public RealTimePumpStreamHandler(ICmdRecordParser cmdRecordParser){
+    public RealTimePumpStreamHandler(ICmdPumpStreamHandler cmdRecordParser){
         this.cmdRecordParser = cmdRecordParser;
     }
 

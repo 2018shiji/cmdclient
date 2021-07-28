@@ -1,8 +1,8 @@
 package com.module.cmd.ping;
 
 import com.alibaba.fastjson.JSON;
-import com.module.cmd.ping.executor.PingCommand;
-import com.module.cmd.ping.executor.DeviceMonitor;
+import com.module.cmd.ping.executor.IPProvider;
+import com.module.cmd.ping.executor.PingScheduler;
 import com.module.cmd.ping.response.FieldBridgeResp;
 import com.module.cmd.ping.response.MainServerResp;
 import com.module.cmd.ping.response.PingResponse;
@@ -24,17 +24,17 @@ public class Navigator {
     Logger logger = LoggerFactory.getLogger(Navigator.class);
 
     @Autowired
-    DeviceMonitor deviceMonitor;
+    PingScheduler pingScheduler;
 
-    @PostConstruct
-    public void beginPing(){ deviceMonitor.organizePingTasks(null); }
+//    @PostConstruct
+    public void beginPing(){ pingScheduler.schedulePingJob(null); }
 
     @ResponseBody
     @RequestMapping("getIpsStatusResp")
     public String getIpResponse(){
         logger.info("--------------->dispatch getIpsStatusResp method");
         List<PingResponse> responses = new ArrayList<>();
-        Map<String, PingResponse> pingResponses = PingCommand.getPingResponses();
+        Map<String, PingResponse> pingResponses = pingScheduler.getResponseMap();
         for(Map.Entry<String, PingResponse> item : pingResponses.entrySet()){
             if(item.getKey().equals("standardTimeStamp"))continue;
             responses.add(item.getValue());
@@ -49,7 +49,7 @@ public class Navigator {
     @RequestMapping("getMainServerResp")
     public String getServerResp(){
         List<MainServerResp> serverRespList = new ArrayList<>();
-        Map<String, PingResponse> pingResponse = PingCommand.getPingResponses();
+        Map<String, PingResponse> pingResponse = pingScheduler.getResponseMap();
 
         for(Map.Entry<String, PingResponse> item : pingResponse.entrySet()){
             fulfillMainServerList(item, serverRespList);
@@ -63,7 +63,7 @@ public class Navigator {
     @RequestMapping("getRFIDAndCamera")
     public String getRFIDCameraResp(){
         List<RFIDCameraResp> rfidCameraRespList = new ArrayList<>();
-        Map<String, PingResponse> pingResponse = PingCommand.getPingResponses();
+        Map<String, PingResponse> pingResponse = pingScheduler.getResponseMap();
 
         for(Map.Entry<String, PingResponse> item : pingResponse.entrySet()){
             fulfillRFIDCameraList(item, rfidCameraRespList);
@@ -77,7 +77,7 @@ public class Navigator {
     @RequestMapping("getFieldBridge")
     public String getFieldBridgeResp(){
         List<FieldBridgeResp> fieldBridgeResps = new ArrayList<>();
-        Map<String, PingResponse> pingResponse = PingCommand.getPingResponses();
+        Map<String, PingResponse> pingResponse = pingScheduler.getResponseMap();
 
         for(Map.Entry<String, PingResponse> item : pingResponse.entrySet()){
             fulfillBridgeList(item, fieldBridgeResps);
@@ -88,8 +88,8 @@ public class Navigator {
     }
 
     private void fulfillMainServerList(Map.Entry<String, PingResponse> item, List<MainServerResp> serverRespList){
-        if(DeviceMonitor.MAIN_SERVER_ADDRESSES.contains(item.getKey())){
-            MainServerResp mainServerResp = new MainServerResp(DeviceMonitor.SERVER_MAP.get(item.getKey()));
+        if(IPProvider.MAIN_SERVER_ADDRESSES.contains(item.getKey())){
+            MainServerResp mainServerResp = new MainServerResp(IPProvider.SERVER_MAP.get(item.getKey()));
             PingResponse pingResponse = item.getValue();
             mainServerResp.setServerIP(pingResponse.getIpAddress());
             mainServerResp.setServerOnline(pingResponse.isOnline());
@@ -99,14 +99,14 @@ public class Navigator {
     }
 
     private void fulfillRFIDCameraList(Map.Entry<String, PingResponse> item, List<RFIDCameraResp> rfidCameraRespList){
-        if(DeviceMonitor.RFID_ADDRESSES.contains(item.getKey())){
-            RFIDCameraResp rfidCameraResp = new RFIDCameraResp(DeviceMonitor.RFID_MAP.get(item.getKey()));
+        if(IPProvider.RFID_ADDRESSES.contains(item.getKey())){
+            RFIDCameraResp rfidCameraResp = new RFIDCameraResp(IPProvider.RFID_MAP.get(item.getKey()));
             if(!rfidCameraRespList.contains(rfidCameraResp))
                 doFirstInitAndPutRFID(rfidCameraRespList, item.getValue(), rfidCameraResp);
             else
                 doGetInitAndPutRFID(rfidCameraRespList, item.getValue(), rfidCameraResp);
-        } else if(DeviceMonitor.CAMERA_ADDRESSES.contains(item.getKey())){
-            RFIDCameraResp rfidCameraResp = new RFIDCameraResp(DeviceMonitor.CAMERA_MAP.get(item.getKey()));
+        } else if(IPProvider.CAMERA_ADDRESSES.contains(item.getKey())){
+            RFIDCameraResp rfidCameraResp = new RFIDCameraResp(IPProvider.CAMERA_MAP.get(item.getKey()));
             if (!rfidCameraRespList.contains(rfidCameraResp))
                 doFirstInitAndPutCamera(rfidCameraRespList, item.getValue(), rfidCameraResp);
              else
@@ -143,8 +143,8 @@ public class Navigator {
     }
 
     private void fulfillBridgeList(Map.Entry<String, PingResponse> item, List<FieldBridgeResp> fieldBridgeRespList){
-        if(DeviceMonitor.FIELD_BRIDGE_ADDRESSES.contains(item.getKey())){
-            FieldBridgeResp fieldBridgeResp = new FieldBridgeResp(DeviceMonitor.FIELD_BRIDGE_MAP.get(item.getKey()));
+        if(IPProvider.FIELD_BRIDGE_ADDRESSES.contains(item.getKey())){
+            FieldBridgeResp fieldBridgeResp = new FieldBridgeResp(IPProvider.FIELD_BRIDGE_MAP.get(item.getKey()));
             if(!fieldBridgeRespList.contains(fieldBridgeResp))
                 doFirstInitAndPutBridge(fieldBridgeRespList, item.getValue(), fieldBridgeResp);
             else

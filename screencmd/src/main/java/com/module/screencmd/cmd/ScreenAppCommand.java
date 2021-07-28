@@ -1,17 +1,12 @@
 package com.module.screencmd.cmd;
 
-import com.module.cmd.core.recode.ICmdRecordParser;
-import com.module.cmd.core.recode.RealTimePumpStreamHandler;
-import com.module.screencmd.BeanUtil;
 import com.module.screencmd.cmd.app.VideoAppCmd;
 import com.module.screencmd.cmd.app.WebAppCmd;
-import com.module.screencmd.pojo.AppCmdRecordPojo;
 import org.apache.commons.exec.CommandLine;
 import org.apache.commons.exec.DefaultExecutor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
 @Component
@@ -20,8 +15,6 @@ public class ScreenAppCommand {
     private VideoAppCmd videoAppCmd;
     @Autowired
     private WebAppCmd webAppCmd;
-
-    private ICmdRecordParser cmdRecordParser = BeanUtil.getBean(ScreenAppRecordParser.class);
 
     public void doScreenAppCmdByBat(String execPath){
         try{
@@ -32,7 +25,6 @@ public class ScreenAppCommand {
             CommandLine cmdLine = CommandLine.parse(line);
             DefaultExecutor executor = new DefaultExecutor();
             executor.setExitValues(null);
-            executor.setStreamHandler(new RealTimePumpStreamHandler(cmdRecordParser));
             executor.execute(cmdLine);
 
         } catch (Exception e){e.printStackTrace();}
@@ -67,14 +59,6 @@ public class ScreenAppCommand {
             executor.execute(cmdLine1);
             executor.execute(cmdLine2);
         } catch (Exception e) {e.printStackTrace();}
-    }
-
-    public List<AppCmdRecordPojo> getAppCmdRecordPojoList() {
-        if(cmdRecordParser == null) {
-            System.out.println("尚未执行cmd指令和CmdRecordParser的初始化工作");
-            return null;
-        }
-        return (List<AppCmdRecordPojo>) cmdRecordParser.getCmdParsePojoList();
     }
 
     public static void main(String[] args){

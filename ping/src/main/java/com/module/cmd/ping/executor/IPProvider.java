@@ -1,17 +1,15 @@
 package com.module.cmd.ping.executor;
 
-import com.module.cmd.ping.response.PingResponse;
-import org.quartz.*;
-import org.quartz.impl.StdSchedulerFactory;
-import org.springframework.stereotype.Component;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-import javax.annotation.PostConstruct;
-import java.text.SimpleDateFormat;
-import java.util.*;
-
-@Component
-public class DeviceMonitor {
-    public static final String REMOTE_ADDR_KEY = "remoteAddr";
+public final class IPProvider {
+    public static final Map<String, String> SERVER_MAP = new HashMap();
+    public static final Map<String, String> RFID_MAP = new HashMap();
+    public static final Map<String, String> CAMERA_MAP = new HashMap();
+    public static final Map<String, String> FIELD_BRIDGE_MAP = new HashMap();
 
     public static final List<String> MAIN_SERVER_ADDRESSES = Arrays.asList(
             "10.28.56.10", "10.28.56.12", "10.28.56.13", "10.28.32.246", "10.28.32.71",
@@ -27,7 +25,7 @@ public class DeviceMonitor {
             "10.28.56.141", "10.28.56.142", "10.28.56.143", "10.28.56.144", "10.28.56.145",
             "10.28.56.146", "10.28.56.147", "10.28.56.148", "10.28.56.149", "10.28.56.150",
             "10.28.56.151", "10.28.56.152"
-     );
+    );
 
     public static final List<String> CAMERA_ADDRESSES = Arrays.asList(
             "10.28.56.21", "10.28.56.22", "10.28.56.23", "10.28.56.24", "10.28.56.25",
@@ -53,13 +51,7 @@ public class DeviceMonitor {
             "10.28.56.111", "10.28.56.112", "10.28.56.113", "10.28.56.114"
     );
 
-    public static final Map<String, String> SERVER_MAP = new HashMap();
-    public static final Map<String, String> RFID_MAP = new HashMap();
-    public static final Map<String, String> CAMERA_MAP = new HashMap();
-    public static final Map<String, String> FIELD_BRIDGE_MAP = new HashMap();
-
-    @PostConstruct
-    public void initAddressMap(){
+    public static void initIPProvider(){
         SERVER_MAP.put("10.28.56.10", "图像处理服务器");
         SERVER_MAP.put("10.28.56.12", "CORS1");
         SERVER_MAP.put("10.28.56.13", "CORS2");
@@ -82,86 +74,6 @@ public class DeviceMonitor {
         for (int i = 1; i <= FIELD_BRIDGE_ADDRESSES.size(); i++){
             FIELD_BRIDGE_MAP.put(FIELD_BRIDGE_ADDRESSES.get(i-1), "3" + (Math.ceil((i+1)/2) < 10 ? "0" + (int)Math.ceil((i+1)/2) : (int)Math.ceil((i+1)/2)));
         }
-    }
-
-    public void organizePingTasks(List<String> remoteAddr){
-        try{
-            SchedulerFactory schedulerFactory = new StdSchedulerFactory();
-            Scheduler scheduler = schedulerFactory.getScheduler();
-            scheduler.start();
-
-            Map<String, PingResponse> pingResponses = PingCommand.getPingResponses();
-            String timeStamp = new SimpleDateFormat("HH:mm:ss:SSS").format(System.currentTimeMillis());
-            pingResponses.put("standardTimeStamp",
-                    new PingResponse("standardTimeStamp", false, "", timeStamp));
-
-            monitorServer(scheduler, null);
-            monitorRFID(scheduler, null);
-            monitorCamera(scheduler, null);
-            monitorFieldBridge(scheduler, null);
-
-//            JobDetail jobDetail2 = JobBuilder.newJob(DebugTask.class).build();
-//            scheduler.scheduleJob(jobDetail2, withTriggerPerSeconds(10, 30));
-
-        } catch (Exception e){e.printStackTrace();}
-    }
-
-    public JobDetail withPingJobDetail(String remoteAddr){
-        JobDetail jobDetail = JobBuilder.newJob(PingTask.class)
-                .usingJobData(REMOTE_ADDR_KEY, remoteAddr)
-                .build();
-        return jobDetail;
-    }
-
-    public Trigger withTriggerPerSeconds(int cap, int seconds){
-        Trigger trigger = TriggerBuilder.newTrigger()
-                .withSchedule(CronScheduleBuilder.cronSchedule(cap + "/" + seconds + " * * * * ? 2020"))
-                .build();
-        return trigger;
-    }
-
-    private void monitorServer(Scheduler scheduler, List<String> addresses) throws SchedulerException {
-        List<String> addressList = new ArrayList<>();
-        addressList.addAll(MAIN_SERVER_ADDRESSES);
-
-        for(int i = 0; i < addressList.size(); i++){
-            scheduler.scheduleJob(withPingJobDetail(addressList.get(i)),
-                    withTriggerPerSeconds(0, 30));
-        }
-    }
-
-    private void monitorRFID(Scheduler scheduler, List<String> addresses) throws SchedulerException {
-        List<String> addressList = new ArrayList<>();
-        addressList.addAll(RFID_ADDRESSES);
-
-        for (int i = 0; i < addressList.size(); i++) {
-            scheduler.scheduleJob(withPingJobDetail(addressList.get(i)),
-                    withTriggerPerSeconds(10, 30));
-        }
-
-    }
-
-    private void monitorCamera(Scheduler scheduler, List<String> addresses) throws SchedulerException {
-        List<String> addressList = new ArrayList<>();
-        addressList.addAll(CAMERA_ADDRESSES);
-
-        for (int i = 0; i < addressList.size(); i++) {
-            scheduler.scheduleJob(withPingJobDetail(addressList.get(i)),
-                    withTriggerPerSeconds(10, 30));
-        }
-
-    }
-
-
-    private void monitorFieldBridge(Scheduler scheduler, List<String> addresses) throws SchedulerException {
-        List<String> addressList = new ArrayList<>();
-        addressList.addAll(FIELD_BRIDGE_ADDRESSES);
-
-        for (int i = 0; i < addressList.size(); i++) {
-            scheduler.scheduleJob(withPingJobDetail(addressList.get(i)),
-                    withTriggerPerSeconds(20, 30));
-        }
-
     }
 
 }
